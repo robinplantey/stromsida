@@ -1,0 +1,26 @@
+{% load static %}
+<!--   Core JS Files   -->
+<script src="{% static 'assets/js/core/jquery.min.js' %}"></script>
+<script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+<script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+<!-- <script src="{% static 'assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script> -->
+
+<!-- Chart JS -->
+<script src="{% static 'assets/js/plugins/chartjs.min.js' %}" defer></script>
+{{ futureData|json_script:"forecast" }}
+{{ futureAvg|json_script:"avg"}}
+{{ 1dayData|json_script:"1d" }}
+{{ 30dayData|json_script:"30d" }}
+{{ 180dayData|json_script:"180d" }}
+
+<!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
+<!-- <script src="{% static 'assets/js/black-dashboard.min.js' %}?v=1.0.0"></script> -->
+<script src="{% static 'assets/js/dataVisuals.js' %}"></script>
+<script src="{% static 'assets/js/themeSettings.js' %}"></script>
+
+<script>
+    $(document).ready(function () {
+        // Javascript method's body can be found in assets/js/dataVisuals.js
+        graphics.initDashboardPageCharts();
+    });
+</script>

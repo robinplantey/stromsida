@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% include 'includes/head.html' %}
+    {% block extrastyle %}{% endblock extrastyle %}
+</head>
+
+<body class="{% block bodyclass %}{% endblock bodyclass %}">
+    <div class="wrapper">
+
+        <div class="main-panel">
+            {% block content %}{% endblock content %}
+        </div>
+    </div>
+    {% block fixed-plugin %}
+    {% include 'includes/fixed-plugin.html' %}
+    {% endblock fixed-plugin %}
+    {% include 'includes/scripts.html' %}
+    {% block extrajs %}
+    {% endblock extrajs %}
+</body>
+
+</html>

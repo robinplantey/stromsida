@@ -1,0 +1,169 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+{% block content %}
+<div class="content">
+ <div class="row">
+        <div class="col-lg-6 col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <h1 class="card-title"> {{ dateToday }} </h2>
+                    <h4 class="card-title"> Average Price </h4>
+                    <h2 class="title"> {{ avgToday }}  NOK/kWh</h2>
+                    
+                </div>
+                <div class="card-body">
+                <h4 class="card-title"> Variation </h4>
+                    <div class="table-responsive">
+                        <table class="table tablesorter " id="">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th>
+                                        1d
+                                    </th>
+                                    <th>
+                                        7d
+                                    </th>
+                                    <th>
+                                        30d
+                                    </th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    <tr>
+                                        <th style="color:{{ color1d }};">
+                                            {{ delta1d }}
+                                        </th>
+                                        <th style="color:{{ color7d }};">
+                                            {{ delta7d }}
+                                        </th>
+                                        <th style="color:{{ color30d }};">
+                                            {{ delta30d }}
+                                        </th>
+                                    </tr>
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-12">
+            <div class="card ">
+                <div class="card-header">
+                    <div class="row">
+                    <div class="col-sm-6 text-left">
+                    <h3 class="card-title"> Cheap Hours </h3>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <h5 class="card-title"> >20% discount w.r.t to daily average  </h5>
+                    </div>
+                </div>
+                </div>
+                <div class="card-body">
+                {% if cheapHours.0 %}
+                    <div class="table-responsive">
+                        <table class="table tablesorter " id="">
+                            <thead class="text-primary">
+                                <tr>
+                                    <th>
+                                        Time
+                                    </th>
+                                    <th>
+                                        Price
+                                    </th>
+                                    <th>
+                                        Discount
+                                    </th>
+                                </tr>
+                            </thead>
+                                <tbody>
+                                    {% for hour in cheapHours.1 %}
+                                    <tr>
+                                        <th>
+                                            {{ hour.time }}:00 {% if hour.nextDay %}<sup>+1</sup>{% endif %}
+                                        </th>
+                                        <th>
+                                            {{ hour.price|floatformat:2 }}
+                                        </th>
+                                        <th>
+                                            {{ hour.discount }}
+                                        </th>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p> No upcoming large price fluctuations </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+                <div class="row">
+        <div class="col-12">
+            <div class="card card-chart">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            <h3 class="card-title">Price Forecast (NOK/kWh)</h3>
+                        </div>
+                        <div class="col-sm-6 text-right">
+                            <h5 class="card-title"> Prices for the next day are published around 13:00 </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="forecastChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <div class="card card-chart">
+                <div class="card-header ">
+                    <div class="row">
+                        <div class="col-sm-6 text-left">
+                            <h3 class="card-title">Price History (NOK/kWh)</h3>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="btn-group btn-group-toggle float-right" data-toggle="buttons">
+                                <label class="btn btn-sm btn-primary btn-simple active" id="0">
+                                    <input type="radio" name="options" checked>
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Today</span>
+                                    <span class="d-block d-sm-none">
+                                        Today
+                                    </span>
+                                </label>
+                                <label class="btn btn-sm btn-primary btn-simple" id="1">
+                                    <input type="radio" class="d-none d-sm-none" name="options">
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Last 30 days</span>
+                                    <span class="d-block d-sm-none">
+                                        30d
+                                    </span>
+                                </label>
+                                <label class="btn btn-sm btn-primary btn-simple" id="2">
+                                    <input type="radio" class="d-none" name="options">
+                                    <span class="d-none d-sm-block d-md-block d-lg-block d-xl-block">Last 6 months</span>
+                                    <span class="d-block d-sm-none">
+                                        180d
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-area">
+                        <canvas id="chartPrices"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock content %}
