@@ -15,7 +15,7 @@ import os
 from configparser import ConfigParser
 
 config = ConfigParser()
-config.read(Path.cwd()+'/.env.example')
+config.read(str(Path.cwd())+'/.env.example')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
